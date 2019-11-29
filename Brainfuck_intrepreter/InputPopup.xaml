@@ -1,0 +1,14 @@
+﻿<Window x:Class="Brainfuck_intrepreter.InputPopup"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Brainfuck_intrepreter"
+        mc:Ignorable="d"
+        Title="Brainfuck wants input" Height="175" Width="300" ResizeMode="NoResize">
+    <Grid>
+        <TextBox x:Name="textValue" HorizontalAlignment="Left" Height="53" Margin="43,10,0,56" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="213" FontFamily="Verdana" FontSize="22" MaxLength="1" MaxLines="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <Button x:Name="buttonOk" Content="OK" HorizontalAlignment="Left" Margin="43,83,0,0" VerticalAlignment="Top" Width="213" Height="41" FontFamily="Verdana" FontSize="20" Click="ButtonOk_Click" />
+
+    </Grid>
+</Window>
