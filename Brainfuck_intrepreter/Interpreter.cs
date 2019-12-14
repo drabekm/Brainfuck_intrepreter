@@ -13,7 +13,6 @@ namespace Brainfuck_intrepreter
     {
         //Consts
         private const int memoryAmount = 80000;
-
         //Vars
         private char[] memory = new char[memoryAmount];
         private char helpVariable = (char)0;
@@ -129,18 +128,55 @@ namespace Brainfuck_intrepreter
         {
             Reset(); // Reset everything
             this.isDebug = isDebug;
-            if(isDebug)
+            if (isDebug)
             {
                 labelIsDebug.Content = "Is in debug: true";
             }
+
+            RemoveShitFromCode(code);
+            if (!IsCodeCorrect())
+            {
+                MessageBox.Show("Your code is incorect. Check while brackets");
+            }
+            else
+            {
+                MainLoop();
+            }
+        }
+
+        private void RemoveShitFromCode(string code)
+        {
             //Remove escape characters n shit from code
             this.code = code;
             this.code = code.Replace("\r\n", "").Replace("\r", "").Replace("\n", "");
-
-            MainLoop();
         }
 
-        
+        public bool IsCodeCorrect()
+        {
+            int leftBracketCount = 0, rightBracketCount = 0;
+            for (int i = 0; i < code.Length; i++)
+            {
+                if (code[i] == '[')
+                {
+                    leftBracketCount++;
+                }
+                else if (code[i] == ']')
+                {
+                    rightBracketCount++;
+                }
+            }
+
+            if (leftBracketCount == rightBracketCount)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
         /// <summary>
         /// Checks if the current memory block is > 0. If so continues with the code.
         /// If the memory block is == 0, the it skips everything inside the cycle
