@@ -42,7 +42,7 @@ namespace Brainfuck_intrepreter
 
         private void ButtonContinue_Click(object sender, RoutedEventArgs e)
         {
-            interpreter.Continue();
+            //interpreter.Continue();
         }
 
         private void ButtonStep_Click(object sender, RoutedEventArgs e)

@@ -74,11 +74,19 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Config.cs" />
     <Compile Include="InputPopup.xaml.cs">
       <DependentUpon>InputPopup.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Instructions\DecrementMemoryCell.cs" />
+    <Compile Include="Instructions\IInstruction.cs" />
+    <Compile Include="Instructions\IncrementMemoryCell.cs" />
+    <Compile Include="Instructions\DecrementPointer.cs" />
+    <Compile Include="Instructions\IncrementPointer.cs" />
+    <Compile Include="Instructions\LoadToStorage.cs" />
+    <Compile Include="Instructions\SaveToStorage.cs" />
     <Compile Include="Interpreter.cs" />
+    <Compile Include="InterpreterState.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
