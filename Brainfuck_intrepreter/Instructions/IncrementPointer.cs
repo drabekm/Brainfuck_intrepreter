@@ -4,10 +4,10 @@
     {
         public void Execute(InterpreterState state)
         {
-            state.ProgramCounter++;
-            if (state.ProgramCounter > Config.InterpreterMemorySize - 1)
+            state.Pointer++;
+            if (state.Pointer > Config.InterpreterMemorySize - 1)
             {
-                state.ProgramCounter = 0;
+                state.Pointer = 0;
             }
         }
     }

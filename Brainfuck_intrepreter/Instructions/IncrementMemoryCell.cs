@@ -4,7 +4,7 @@
     {
         public void Execute(InterpreterState state)
         {
-            state.Memory[state.Pointer]++;
+            var value = state.Memory[state.Pointer];
             if (state.Memory[state.Pointer] > (char)255)
             {
                 state.Memory[state.Pointer] = (char)0;

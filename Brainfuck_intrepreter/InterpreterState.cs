@@ -13,6 +13,8 @@ namespace Brainfuck_intrepreter
         public uint Pointer { get; set; }
         public uint ProgramCounter { get; set; }
 
+        public List<uint> CallStack { get; set; } = new List<uint> { };
+
         public bool InDebugMode { get; set; }
         public bool BreakpointTriggered { get; set; }
         public bool Finished { get; set; }

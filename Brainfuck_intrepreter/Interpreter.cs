@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -32,8 +33,10 @@ namespace Brainfuck_intrepreter
             instructionsByCode.Add('>', new IncrementPointer());
             instructionsByCode.Add('<', new DecrementPointer());
             instructionsByCode.Add('$', new SaveToStorage());
-            instructionsByCode.Add('!', new LoadToStorage());
+            instructionsByCode.Add('!', new LoadToStorage());            
             instructionsByCode.Add('@', new Breakpoint());
+            instructionsByCode.Add('[', new WhileStart());
+            instructionsByCode.Add(']', new WhileEnd());
             instructionsByCode.Add(',', new ReadInput());
             instructionsByCode.Add('.', new Print());
 
@@ -76,81 +79,45 @@ namespace Brainfuck_intrepreter
             this.code = string.Join(string.Empty, code.Select(x => Config.AllowedTokens.Contains(x) ? x.ToString() : string.Empty));
         }
 
+        
+        /// <summary>
+        /// Since brainfuck is supposed to ignore anything that isn't one of the brainfuck opcodes
+        /// this just checks if all while loop brackets are closed
+        /// </summary>
+        /// <returns></returns>
         public bool ValidateCode()
         {
+            bool isCodeValid = true;
+
+            //Regex to separate angle brackets from rest of the code
+            string bracketValidationCode = Regex.Replace(code, "[+-<>\\w]+", string.Empty);
+
             int leftBracketCount = 0, rightBracketCount = 0;
-            for (int i = 0; i < code.Length; i++)
+            foreach(var bracket in bracketValidationCode)
             {
-                if (code[i] == '[')
+                if (bracket == '[')
                 {
                     leftBracketCount++;
                 }
-                else if (code[i] == ']')
+                else if (bracket == ']')
                 {
                     rightBracketCount++;
                 }
+
+                if (rightBracketCount > leftBracketCount)
+                {
+                    isCodeValid = false;
+                    break;
+                }
             }
 
-            if (leftBracketCount == rightBracketCount)
+            if (leftBracketCount != rightBracketCount)
             {
-                return true;
+                isCodeValid = false;
             }
-            else
-            {
-                return false;
-            }
+
+            return isCodeValid;
         }
-
-
-        /// <summary>
-        /// Checks if the current memory block is > 0. If so continues with the code.
-        /// If the memory block is == 0, the it skips everything inside the cycle
-        /// it doesn't actually execute any code. It just changes a position where
-        /// the program should continue
-        /// </summary>
-        /// <param name="code">Brainfuck code</param>
-        //private void WhileStart()
-        //{
-        //    //If current memory value is zero -> skip to the end of a cycle. It's kinda like an if statement
-        //    if (memory[pointer] == (char)0)
-        //    {
-        //        while (code[programCounter] != ']')
-        //        {
-        //            programCounter++;
-        //        }
-        //    }
-        //}
-
-        ///// <summary>
-        ///// Checks if the cycle should repeat or not and returns an index where the code should continue
-        ///// it doesn't actually execute any code. It just returns a position where
-        ///// the program should continue
-        ///// </summary>        
-        ///// <param name="code">Brainfuck code</param>
-        //private void WhileEnd()
-        //{
-        //    if (memory[pointer] != 0)
-        //    {
-        //        int skipParenthesis = -1;
-
-        //        //There could be more while cycles inside a while cycle
-        //        //This makes sure to return to the correct while start
-        //        while (!(skipParenthesis == 0 && code[programCounter] == '['))
-        //        {
-
-        //            if (code[programCounter] == ']')
-        //            {
-        //                skipParenthesis++;
-        //            }
-        //            if (code[programCounter] == '[')
-        //            {
-        //                skipParenthesis--;
-        //            }
-
-        //            programCounter--;
-        //        }
-        //    }
-        //}
 
         private void IncrementProgramCounter()
         {
@@ -161,19 +128,6 @@ namespace Brainfuck_intrepreter
             }
         }
 
-        //private void MainLoop()
-        //{
-        //    while (programCounter < code.Length && !isFinished)
-        //    {
-        //        DecodeInstruction();
-        //        IncrementProgramCounter();
-        //        if(isBreak)
-        //        {
-        //            break;
-        //        }
-        //    }
-        //}
-
         public void DoStep()
         {
             if (!state.Finished)
@@ -182,14 +136,6 @@ namespace Brainfuck_intrepreter
                 IncrementProgramCounter();
             }
         }
-
-        //public void Continue()
-        //{
-        //    //IncrementProgramCounter();
-        //    isBreak = false;
-        //    labelIsBreak.Content = "On breakpoint: false";
-        //    MainLoop();
-        //}
 
         private void DecodeInstruction()
         {
@@ -204,7 +150,5 @@ namespace Brainfuck_intrepreter
                 throw new Exception("Instruction not implemented");
             }
         }
-
-
     }
 }

@@ -78,12 +78,15 @@
     <Compile Include="InputPopup.xaml.cs">
       <DependentUpon>InputPopup.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Instructions\Breakpoint.cs" />
     <Compile Include="Instructions\DecrementMemoryCell.cs" />
     <Compile Include="Instructions\IInstruction.cs" />
     <Compile Include="Instructions\IncrementMemoryCell.cs" />
     <Compile Include="Instructions\DecrementPointer.cs" />
     <Compile Include="Instructions\IncrementPointer.cs" />
     <Compile Include="Instructions\LoadToStorage.cs" />
+    <Compile Include="Instructions\Print.cs" />
+    <Compile Include="Instructions\ReadInput.cs" />
     <Compile Include="Instructions\SaveToStorage.cs" />
     <Compile Include="Interpreter.cs" />
     <Compile Include="InterpreterState.cs" />
